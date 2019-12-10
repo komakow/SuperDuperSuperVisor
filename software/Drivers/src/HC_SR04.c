@@ -29,8 +29,8 @@ static float ReadDistance()
 	int capture_time = 0;
 	float distance = 0;
 
-	TIM10->CNT = 0;                            //clear CNT
 	TIM10->SR &=~TIM_SR_UIF;
+	TIM10->CNT = 0;                            //clear CNT
 	while( !(TIM10->SR & TIM_SR_UIF) )         //wait until capture
 	{
 		if( TIM10->CNT > overtime - 1 )	       //if timer is overflow
@@ -57,7 +57,7 @@ void HC_SR04_Init()
 
 }
 
-float HC_SR04_ReadDistance(HCSRTypeDef sensor)
+float HC_SR04_ReadDistance()
 {
 
   float distance = 0;

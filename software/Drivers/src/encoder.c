@@ -16,18 +16,18 @@
 #include "defGPIO.h"
 #include "GPIODriver.h"
 
-
-volatile float speed_encoder = 0;
-
+#define TRESHOLD_ARR   80
+volatile float enc_left = 0;
+volatile float enc_right = 0;
 
 static err TIM5_Init()
 {
   err ret = 0;
 
   RCC->APB1ENR |= RCC_APB1ENR_TIM5EN;                 //start clock for TIM5
-  TIM5->SMCR = TIM_SMCR_SMS_1;                        //count only TI2
+  TIM5->SMCR = TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1;       //count on TI2 and TI1
   TIM5->CCMR1 = TIM_CCMR1_IC1F | TIM_CCMR1_IC2F;      //filtr
-  TIM5->ARR = 6;
+  TIM5->ARR = TRESHOLD_ARR;
   TIM5->DIER = TIM_DIER_UIE;
   TIM5->CR1 = TIM_CR1_CEN;
 
@@ -65,29 +65,22 @@ err Encoder_IRQ_Disable()
   return ret;
 }
 
-
-float Encoder_SpeedSend()
-{
-  uint8_t sendSpeed[4];
-  sendSpeed[0] = 'V';                                           //char started frame of velocity
-  sendSpeed[1] = (uint8_t)speed_encoder;
-  sendSpeed[2] = 10;
-  sendSpeed[3] = 13;
-
-  return speed_encoder;
-}
-
 __attribute__((interrupt)) void TIM5_IRQHandler(void)         //interrupt form encoder
 {
-
-  int stop = 0;
   if (TIM5->SR & TIM_SR_UIF)
   {
-    stop = TIM6->CNT;
-    speed_encoder = (0.15 / stop) * 42000;                     // cm/s
-    TIM6->CNT = 0;
-    TIM5->SR = ~TIM_SR_UIF;                                   //clear update irq flag
-
+	  if(TIM5->CNT > (TRESHOLD_ARR-15))
+	  {
+		  enc_left = 1;
+		  enc_right = 0;
+	  }
+	  else
+	  {
+		  enc_right = 1;
+		  enc_left = 0;
+	  }
+	  TIM5->CNT = TRESHOLD_ARR / 2;
+	  TIM5->SR = ~TIM_SR_UIF;                                   //clear update irq flag
   }
 }
 

@@ -11,11 +11,14 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "HC_SR04.h"
 
 void vSonicSensor( void *pvParameters )
 {
+	float distance;
     for( ;; )
     {
+    	distance = HC_SR04_ReadDistance();
     }
     vTaskDelete( NULL );
 }

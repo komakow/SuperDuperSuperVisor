@@ -11,12 +11,15 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "declarations.h"
+#include "encoder.h"
 
 
 void vEncoder( void *pvParameters )
 {
     for( ;; )
     {
+
 
     }
     vTaskDelete( NULL );
