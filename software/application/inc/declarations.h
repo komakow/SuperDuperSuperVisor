@@ -16,4 +16,11 @@ TaskHandle_t xSonicSensor;
 TaskHandle_t xServoMotor;
 TaskHandle_t xEncoder;
 
+QueueHandle_t xEncoderQue;
+QueueHandle_t xDiodePlusQue;
+QueueHandle_t xDiodeMinusQue;
+QueueHandle_t xSonicSensorQue;
+
+void irsFromEncoder(uint8_t direct);
+
 #endif /* DECLARATIONS_H_ */

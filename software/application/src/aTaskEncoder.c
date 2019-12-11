@@ -14,13 +14,36 @@
 #include "declarations.h"
 #include "encoder.h"
 
+volatile uint8_t directFromISR;
 
+
+//Task
 void vEncoder( void *pvParameters )
 {
+  //if 0-left, if 1-right
+  uint8_t directionOfEncoder;
+  uint8_t diodeTouch = 1;
     for( ;; )
     {
-
-      vTaskDelay( 100 / portTICK_RATE_MS );
+      if(xQueueReceive(xEncoderQue,&directionOfEncoder, 0) == pdTRUE)
+      {
+        if(directionOfEncoder == 0)
+        {
+          xQueueSend(xDiodePlusQue, &diodeTouch, 0);
+        }
+        else
+        {
+          xQueueSend(xDiodeMinusQue, &diodeTouch, 0);
+        }
+      }
+      vTaskDelay( 50 / portTICK_RATE_MS );
     }
     vTaskDelete( NULL );
+}
+
+//function called at encoder driver from IRQ
+void irsFromEncoder(uint8_t direct)
+{
+  directFromISR = direct;
+  xQueueSendFromISR(xEncoderQue, &directFromISR, pdFALSE);
 }

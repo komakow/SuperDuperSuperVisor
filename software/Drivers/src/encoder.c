@@ -19,6 +19,7 @@
 #define TRESHOLD_ARR   80
 volatile float enc_left = 0;
 volatile float enc_right = 0;
+static userCB localCB;
 
 static err TIM5_Init()
 {
@@ -34,9 +35,14 @@ static err TIM5_Init()
   return ret;
 }
 
-err Encoder_Init()
+err Encoder_Init(userCB callback)
 {
   err ret = 0;
+  if(callback == (void*)0)
+  {
+    return E_NOT_INITIALIZED;
+  }
+  localCB = callback;         //user callback
 
   TIM5_Init();                //init and enable TIM5
   Encoder_IRQ_Enable();       //enable interrupts
@@ -71,13 +77,17 @@ __attribute__((interrupt)) void TIM5_IRQHandler(void)         //interrupt form e
   {
 	  if(TIM5->CNT > (TRESHOLD_ARR-15))
 	  {
-		  enc_left = 1;
-		  enc_right = 0;
+	    if(localCB != (void*)0)
+	    {
+	      localCB(0);     //left side
+	    }
 	  }
 	  else
 	  {
-		  enc_right = 1;
-		  enc_left = 0;
+      if(localCB != (void*)0)
+      {
+        localCB(1);      //right side
+      }
 	  }
 	  TIM5->CNT = TRESHOLD_ARR / 2;
 	  TIM5->SR = ~TIM_SR_UIF;                                   //clear update irq flag
