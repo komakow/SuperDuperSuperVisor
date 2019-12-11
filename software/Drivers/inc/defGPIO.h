@@ -67,4 +67,36 @@ GPIOcfgType DiodeRed;
 #define DiodeOrange_port    PORTD
 #define DiodeOrange_pin     PIN13
 GPIOcfgType DiodeOrange;
+
+//1 diode
+#define Diode1_port    PORTC
+#define Diode1_pin     PIN6
+GPIOcfgType Diode1;
+
+//2 diode
+#define Diode2_port    PORTC
+#define Diode2_pin     PIN7
+GPIOcfgType Diode2;
+
+//3 diode
+#define Diode3_port    PORTC
+#define Diode3_pin     PIN8
+GPIOcfgType Diode3;
+
+//4 diode
+#define Diode4_port    PORTC
+#define Diode4_pin     PIN9
+GPIOcfgType Diode4;
+
+//5 diode
+#define Diode5_port    PORTE
+#define Diode5_pin     PIN10
+GPIOcfgType Diode5;
+
+//6 diode
+#define Diode6_port    PORTE
+#define Diode6_pin     PIN11
+GPIOcfgType Diode6;
+
+
 #endif /* DEFGPIO_H_ */

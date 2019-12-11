@@ -7,9 +7,9 @@
  *@brief Source code for config all of GPIO ports and pins.
  */
 
+#include "stm32f4xx.h"
 #include <GPIODriver.h>
 #include "defGPIO.h"
-#include "stm32f4xx.h"
 
 int GPIO_InitializeAll()
 {
@@ -133,6 +133,72 @@ int GPIO_InitializeAll()
   if(gpioCfg(&DiodeOrange) != 0)   //if status of init GPIO is 'error'
   {
 	ret = -10;
+  }
+
+  Diode1.mode     = output;
+  Diode1.pin      = Diode1_pin;
+  Diode1.port     = Diode1_port;
+  Diode1.pull     = pullDown;
+  Diode1.typ      = pushPull;
+  Diode1.speed    = medium;
+  if(gpioCfg(&Diode1) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -11;
+  }
+
+  Diode2.mode     = output;
+  Diode2.pin      = Diode2_pin;
+  Diode2.port     = Diode2_port;
+  Diode2.pull     = pullDown;
+  Diode2.typ      = pushPull;
+  Diode2.speed    = medium;
+  if(gpioCfg(&Diode2) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -12;
+  }
+
+  Diode3.mode     = output;
+  Diode3.pin      = Diode3_pin;
+  Diode3.port     = Diode3_port;
+  Diode3.pull     = pullDown;
+  Diode3.typ      = pushPull;
+  Diode3.speed    = medium;
+  if(gpioCfg(&Diode3) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -13;
+  }
+
+  Diode4.mode     = output;
+  Diode4.pin      = Diode4_pin;
+  Diode4.port     = Diode4_port;
+  Diode4.pull     = pullDown;
+  Diode4.typ      = pushPull;
+  Diode4.speed    = medium;
+  if(gpioCfg(&Diode4) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -14;
+  }
+
+  Diode5.mode     = output;
+  Diode5.pin      = Diode5_pin;
+  Diode5.port     = Diode5_port;
+  Diode5.pull     = pullDown;
+  Diode5.typ      = pushPull;
+  Diode5.speed    = medium;
+  if(gpioCfg(&Diode5) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -15;
+  }
+
+  Diode6.mode     = output;
+  Diode6.pin      = Diode6_pin;
+  Diode6.port     = Diode6_port;
+  Diode6.pull     = pullDown;
+  Diode6.typ      = pushPull;
+  Diode6.speed    = medium;
+  if(gpioCfg(&Diode6) != 0)   //if status of init GPIO is 'error'
+  {
+  ret = -16;
   }
 
 return ret;

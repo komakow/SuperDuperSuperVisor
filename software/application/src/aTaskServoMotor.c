@@ -11,13 +11,18 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "diodesDriver.h"
 
 
 void vServoMotor( void *pvParameters )
 {
     for( ;; )
     {
-
+      for(int a=0;a<7;a++)
+      {
+        setDiodes(a);
+        vTaskDelay( 500 / portTICK_RATE_MS );
+      }
     }
     vTaskDelete( NULL );
 }

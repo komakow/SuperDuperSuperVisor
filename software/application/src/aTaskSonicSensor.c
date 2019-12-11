@@ -18,7 +18,11 @@ void vSonicSensor( void *pvParameters )
 	float distance;
     for( ;; )
     {
+      taskENTER_CRITICAL();
     	distance = HC_SR04_ReadDistance();
+    	taskEXIT_CRITICAL();
+
+      vTaskDelay( 100 / portTICK_RATE_MS );
     }
     vTaskDelete( NULL );
 }

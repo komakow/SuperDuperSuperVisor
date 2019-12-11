@@ -20,7 +20,7 @@ void vEncoder( void *pvParameters )
     for( ;; )
     {
 
-
+      vTaskDelay( 100 / portTICK_RATE_MS );
     }
     vTaskDelete( NULL );
 }
